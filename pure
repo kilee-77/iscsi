@@ -1,0 +1,5 @@
+iscsiadm -m discovery -t st -p 10.0.0.11
+iscsiadm -m node -T iqn.2010-06.com.purestorage:flasharray.73e3ebb2aa0c32de -p 10.0.0.11 -l
+iscsiadm -m node -T iqn.2010-06.com.purestorage:flasharray.73e3ebb2aa0c32de -p 10.0.0.12 -l
+multipath -ll
+
