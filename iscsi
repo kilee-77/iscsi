@@ -33,4 +33,6 @@ for host in /sys/class/scsi_host/host*; do echo "- - -" > $host/scan; done
 resize2fs /dev/mapper/netappdisk1 
 
 # 포멧방식 : xfs 일경우
+xfs_growfs /mount/point
+
 
