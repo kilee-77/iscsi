@@ -1,0 +1,36 @@
+#iSCSI 연동
+yum install iscsi-initiator-utils
+cat /etc/iscsi/initiatorname.iscsi
+iscsiadm -m discovery -t st -p storage ip(192.168.0.71)
+iscsiadm -m node -T storage iqn info(iqn.1992-08.com.netapp:sn.04af2db5cfa711eeb90800505681362c:vs.5) -l -p storage ip(192.168.0.71)
+iscsiadm -m node -T storage iqn info(iqn.1992-08.com.netapp:sn.04af2db5cfa711eeb90800505681362c:vs.5) -l -p storage ip(192.168.0.72)
+// 멀티패스 일경우 해당 IP정보를 입력
+lsblk
+
+
+#multipath 설정
+systemctl enable multipathd 
+systemctl start multipathd 
+multipath -ll
+
+vi /etc/multipath.conf
+=======================================================
+multipaths {
+     multipath {
+         wwid    3600a0980774f6a34663f58354f2f5355
+         alias   disk01
+	     }
+	}
+========================================================
+systemctl restart multipathd
+
+
+#LUN 증설 후 디스크 용량 증설
+iscsiadm -m session --rescan
+for host in /sys/class/scsi_host/host*; do echo "- - -" > $host/scan; done
+
+# 포멧방식 ext4 일경우
+resize2fs /dev/mapper/netappdisk1 
+
+# 포멧방식 : xfs 일경우
+
