@@ -27,7 +27,7 @@ systemctl restart multipathd
 
 #LUN 증설 후 디스크 용량 증설
 iscsiadm -m session --rescan
-for host in /sys/class/scsi_host/host*; do echo "- - -" > $host/scan; done
+for host in /sys/class/scsi_host/host*; do echo "- - -" > $host/scan; done
 
 # 포멧방식 ext4 일경우
 resize2fs /dev/mapper/netappdisk1 
